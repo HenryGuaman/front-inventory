@@ -11,7 +11,7 @@ import { CategoryService } from 'src/app/modules/shared/services/category.servic
 export class NewCategoryComponent implements OnInit{
 
   public categoryForm!: FormGroup;
-  estadoFormulario: string ="Agregar";
+  estadoFormulario: string ="";
   private fb = inject(FormBuilder);
   private dialogRef = inject(MatDialogRef<NewCategoryComponent>); 
   private categoryService = inject(CategoryService);
@@ -30,7 +30,7 @@ export class NewCategoryComponent implements OnInit{
 
     if(this.data != null){
       this.updateForm(this.data);
-      this.estadoFormulario="Actualizar";
+      this.estadoFormulario = "Actualizar";
     }
   }
   onSave(){
@@ -38,10 +38,10 @@ export class NewCategoryComponent implements OnInit{
       name: this.categoryForm.get('name')?.value,
       description: this.categoryForm.get('description')?.value
     }
-    if(data !=null ){
+    if(this.data !=null ){
       //update registry
       this.categoryService.updateCategory(data, this.data.id)
-            .subscribe((data:any)=>{
+            .subscribe( (data: any)=>{
               this.dialogRef.close(1);
             }, (error:any)=>{
               this.dialogRef.close(2);
@@ -50,7 +50,6 @@ export class NewCategoryComponent implements OnInit{
       //create registry
       this.categoryService.saveCategories(data)
           .subscribe((data: any)=> {
-            console.log(data);
             this.dialogRef.close(1);
           },(error: any) =>{
             this.dialogRef.close(2);
