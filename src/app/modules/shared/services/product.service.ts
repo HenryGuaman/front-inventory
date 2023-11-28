@@ -11,10 +11,53 @@ export class ProductService {
   constructor(private http:HttpClient ) { }
   
   /**
-   * Todos los productos
+   * get all the products
    */
   getProducts(){
-    const endpoint = `${base_url}/products`;
-    return this.http.get(endpoint)
+    const endpoint = `${ base_url}/products`;
+    return this.http.get(endpoint);
+  }
+
+  /**
+   * save the product
+   */
+  saveProduct(body: any){
+    const endpoint = `${ base_url}/products`;
+    return this.http.post(endpoint, body);
+  }
+
+  /**
+   * update product
+   */
+  updateProduct (body: any, id: any){
+    const endpoint = `${ base_url}/products/${id}`;
+    return this.http.put(endpoint, body);
+  }
+
+  /**
+   * delete product
+   */
+  deleteProduct(id: any){
+    const endpoint = `${ base_url}/products/${id}`;
+    return this.http.delete(endpoint);
+  }
+
+  /**
+   * search by name
+   */
+  getProductByName(name: any){
+    const endpoint = `${ base_url}/products/filter/${name}`;
+    return this.http.get(endpoint);
+  }
+
+
+  /**
+   * export excel products
+   */
+  exportProduct(){
+    const endpoint = `${base_url}/products/export/excel`;
+    return this.http.get(endpoint, {
+      responseType: 'blob'
+    });
   }
 }
